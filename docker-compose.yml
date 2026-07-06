@@ -1,0 +1,16 @@
+services:
+  revoke-bot:
+    build: .
+    container_name: invite-link-revoker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATA_DIR=/app/data
+    volumes:
+      # Persists the auto-generated SESSION_STRING across restarts/redeploys.
+      - revoke-bot-data:/app/data
+    # No ports exposed — this is a background worker, not a web server.
+
+volumes:
+  revoke-bot-data:
